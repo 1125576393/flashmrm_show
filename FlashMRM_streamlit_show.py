@@ -480,7 +480,7 @@ with col_b:
         inchikey_input = st.text_input(
             "Single mode:",
             value=st.session_state.get("inchikey_value", ""),
-            placeholder="For example: KXRPCFINVWWFHQ-UHFFFAOYSA-N",
+            placeholder="For example: Input InChIKey",
             label_visibility="collapsed",
             key="inchikey_input_active"
         )
@@ -732,5 +732,6 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
