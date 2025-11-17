@@ -14,9 +14,11 @@ st.set_page_config(
 st.markdown("""
 <style>
     html, body, [class*="css"] {
+        font-family: Arial, sans-serif !important;
         font-size: 18px !important;
     }
     .main-header {
+        font-family: Arial, sans-serif !important;
         font-size: 28px !important;
         font-weight: bold;
         margin-bottom: 30px;
@@ -26,6 +28,7 @@ st.markdown("""
         align-items: center;
     }
     .section-header {
+        font-family: Arial, sans-serif !important;
         font-size: 22px !important;
         font-weight: bold;
         margin-top: 30px;
@@ -37,6 +40,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
     .input-label, label, .stTextInput label, .stNumberInput label {
+        font-family: Arial, sans-serif !important;
         width: 150px;
         font-weight: bold;
         font-size: 18px !important;
@@ -91,9 +95,11 @@ st.markdown("""
     }
     /* 新增：表格与按钮字体放大 */
     .stDataFrame th, .stDataFrame td {
+        font-family: Arial, sans-serif !important;
         font-size: 16px !important;
     }
     .stButton>button {
+        font-family: Arial, sans-serif !important;
         font-size: 18px !important;
         height: 45px !important;
     }
@@ -726,3 +732,4 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
