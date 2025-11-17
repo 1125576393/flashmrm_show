@@ -131,7 +131,7 @@ if 'result_df' not in st.session_state:
 def process_uploaded_data():
     """处理上传的数据"""
     try:
-        if st.session_state.input_mode == "Input InChIKey":
+        if st.session_state.input_mode == "Single mode":
             inchikey = st.session_state.inchikey_value.strip()
             if not inchikey:
                 st.session_state.upload_status = ("error", "Please enter a valid InChIKey！")
@@ -140,7 +140,7 @@ def process_uploaded_data():
                 st.session_state.upload_status = ("error", "InChIKey format is invalid! Standard format example: KXRPCFINVWWFHQ-UHFFFAOYSA-N")
                 return False
             st.session_state.uploaded_data = {
-                "type": "single_inchikey",
+                "type": "Single mode",
                 "data": inchikey,
                 "timestamp": time.time()
             }
@@ -217,7 +217,7 @@ def run_flashmrm_calculation():
         
         # 2. 获取目标InChIKey列表
         uploaded_data = st.session_state.uploaded_data
-        if uploaded_data["type"] == "single_inchikey":
+        if uploaded_data["type"] == "Single mode":
             target_inchikeys = [uploaded_data["data"]]
             config.SINGLE_COMPOUND_MODE = True
             config.TARGET_INCHIKEY = target_inchikeys[0]
@@ -357,7 +357,7 @@ def run_flashmrm_calculation():
         fallback_results = []
         target_inchikeys = []
         if st.session_state.uploaded_data:
-            if st.session_state.uploaded_data["type"] == "single_inchikey":
+            if st.session_state.uploaded_data["type"] == "Single mode":
                 target_inchikeys = [st.session_state.uploaded_data["data"]]
             else:
                 target_inchikeys = st.session_state.uploaded_data["data"]["InChIKey"].tolist()
@@ -397,7 +397,7 @@ if st.session_state.get('show_help', False):
     st.info("""
     **Instruction for Use**
 1. **Select Input mode**  
-   - *Single InChIKey*: Enter a standard InChIKey (e.g., `KXRPCFINVWWFHQ-UHFFFAOYSA-N`).  
+   - *Single mode*: Enter a standard InChIKey (e.g., `KXRPCFINVWWFHQ-UHFFFAOYSA-N`).  
    - *Batch mode*: Upload a CSV (containing column `InChIKey`) or a TXT file (one InChIKey per line).  
 2. Click **Upload** to validate and upload the data.  
 3. **Parameter setting (optional)**  
@@ -462,8 +462,8 @@ with col_a:
     )
     selected_mode = st.radio(
         "Select Input mode:",
-        ["Input InChIKey", "Batch mode"],
-        index=0 if st.session_state.get("input_mode", "Input InChIKey") == "Input InChIKey" else 1,
+        ["Single mode", "Batch mode"],
+        index=0 if st.session_state.get("input_mode", "Single mode") == "Single mode" else 1,
         key="mode_selector",
         label_visibility="collapsed"
     )
@@ -476,9 +476,9 @@ with col_b:
         """,
         unsafe_allow_html=True
     )
-    if selected_mode == "Input InChIKey":
+    if selected_mode == "Single mode":
         inchikey_input = st.text_input(
-            "Input InChIKey:",
+            "Single mode:",
             value=st.session_state.get("inchikey_value", ""),
             placeholder="For example: KXRPCFINVWWFHQ-UHFFFAOYSA-N",
             label_visibility="collapsed",
@@ -496,7 +496,7 @@ with col_b:
         )
     else:
         st.text_input(
-            "Input InChIKey:",
+            "Single mode:",
             value="",
             placeholder="Disable individual input in batch mode",
             label_visibility="collapsed",
@@ -732,4 +732,5 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
