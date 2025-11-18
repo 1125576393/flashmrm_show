@@ -538,14 +538,14 @@ with col_b:
         unsafe_allow_html=True
     )
     if selected_mode == "Single mode":
-            inchikey_input = colored_text_input(
+        inchikey_input = colored_text_input(
             "Single mode:",
             key="inchikey_input_active",
             bg="#e8f4ff",            # 背景色（淡蓝，随你改）
             value=st.session_state.get("inchikey_value", ""),
             placeholder="Input InChIKey",
             label_visibility="collapsed",
-            )
+        )
         if inchikey_input:
             st.session_state.inchikey_value = inchikey_input
         st.file_uploader(
@@ -786,6 +786,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
