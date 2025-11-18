@@ -4,37 +4,6 @@ import time
 from FlashMRM import Config, MRMOptimizer
 import uuid
 import os
-
-# ========= 可单独调色的 text_input =========
-def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc", **kwargs):
-    """给单个 text_input 上颜色，其它参数通过 kwargs 透传"""
-    if key is None:
-        key = str(uuid.uuid4())
-    unique_class = f"ci-{key}"
-    css = f"""
-    <style>
-    .{unique_class} > div > div {{
-        background-color: {bg} !important;
-        border: 1px solid {border} !important;
-        border-radius: 4px !important;
-    }}
-    .{unique_class} > div > div > input {{
-        color: {text} !important;
-        background-color: {bg} !important;
-    }}
-    .{unique_class} > div > div:focus-within {{
-        border-color: {border} !important;
-        box-shadow: 0 0 0 1px {border} !important;
-    }}
-    </style>
-    """
-    st.markdown(css, unsafe_allow_html=True)
-    with st.container():
-        st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
-        value = st.text_input(label, key=key, **kwargs)
-        st.markdown("</div>", unsafe_allow_html=True)
-    return value
-# ========= 可单独调色的 text_input 结束 =========
     
 st.set_page_config(
     page_title="FlashMRM",
@@ -134,6 +103,34 @@ st.markdown("""
         font-family: Arial, sans-serif !important;
         font-size: 18px !important;
         height: 45px !important;
+    }
+    
+    /* 1. 保持你原有的 multiselect 标签样式 */
+    span[data-baseweb="tag"] {
+      color: white;
+      background-color: gray;
+    }
+    span[data-baseweb="tag"]:has(span[title="Yellow"]) {
+      color: black;
+      background-color: yellow;
+    }
+    span[data-baseweb="tag"]:has(span[title="Red"]) {
+      color: black;
+      background-color: red;
+    }
+    span[data-baseweb="tag"]:has(span[title="Green"]) {
+      color: black;
+      background-color: green;
+    }
+    /* 2. 新增：为右侧列 (col_b) 中的输入框和上传框添加统一背景 */
+    .col_b > div.st-eb {
+        background-color: #f0f2f6; /* 使用一个淡灰色作为背景，你可以随意修改这个颜色码 */
+        border-radius: 0.5rem;      /* 保持和原生组件一致的圆角 */
+        padding: 0.5rem;            /* 添点内边距，让背景不会紧贴输入框 */
+    }
+    /* 3. 新增：为右侧列中的禁用状态输入框设置不同背景 */
+    .col_b > div.st-eb [aria-disabled="true"] {
+        background-color: #f8f9fa; /* 禁用状态使用一个更浅的颜色 */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -757,6 +754,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
