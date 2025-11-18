@@ -568,7 +568,6 @@ if "sensitivity_weight" not in st.session_state:
 def update_sensitivity():
     st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
 
-
 st.markdown('<div class="section-header">Parameter setting</div>', unsafe_allow_html=True)
 with st.container():
     # 第一行参数：数据库选择 + M/z容差
@@ -618,7 +617,7 @@ with st.container():
     # 第三行参数：特异性权重 + 
     col6, col7 = st.columns([1, 1])
     with col6:
-         specificity_weight = st.number_input(
+        specificity_weight = st.number_input(
             "Specificity weight:",
             min_value=0.0,
             max_value=1.0,
@@ -626,17 +625,19 @@ with st.container():
             step=0.05,
             help="Specificity weight (0–1), default 0.2",
             key="specificity_weight",
-            on_change=update_sensitivity,
+            on_change=update_sensitivity,   # 改 specificity 时自动更新 sensitivity
         )
+
     with col7:
-        sensitivity_weight = 1 - specificity_weight  # 自动计算
+        # 这里不再自己计算，也不再用别的 key
         st.number_input(
             "Sensitivity weight:",
             min_value=0.0,
             max_value=1.0,
-            disabled=True,  # ❗让输入框不可输入
-            key="sensitivity_weight_display",
-            help="Automatically calculated as 1 - Specificity weight"
+            step=0.05,
+            disabled=True,  # 只读显示
+            key="sensitivity_weight",
+            help="Automatically calculated as 1 - Specificity weight",
         )
 
 # 计算区域：按钮 + 进度条
@@ -744,6 +745,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
