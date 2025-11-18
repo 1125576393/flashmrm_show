@@ -124,7 +124,7 @@ st.markdown("""
     }
     /* 2. 新增：为右侧列 (col_b) 中的输入框和上传框添加统一背景 */
     .col_b > div.st-eb {
-        background-color: #f0f2f6; /* 使用一个淡灰色作为背景，你可以随意修改这个颜色码 */
+        background-color: #e8f4ff; /* 使用一个淡灰色作为背景，你可以随意修改这个颜色码 */
         border-radius: 0.5rem;      /* 保持和原生组件一致的圆角 */
         padding: 0.5rem;            /* 添点内边距，让背景不会紧贴输入框 */
     }
@@ -754,6 +754,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
