@@ -166,6 +166,10 @@ st.markdown("""
     [data-testid="stTextInput-inchikey_input_active"] > div > div {
         background-color: #e8f4ff !important;   /* 背景色 */
     }
+    /* 真正的输入框本体 */
+    [data-testid="stTextInput-inchikey_input_active"] > div > div > input {
+        background-color: #e8f4ff !important;   /* 把 input 的白背景改掉 */
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -787,6 +791,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
