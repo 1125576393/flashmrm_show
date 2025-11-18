@@ -559,6 +559,16 @@ if st.session_state.uploaded_data:
                 st.write(f"... totle{len(ud['data'])}valid records")
 
 # 参数设置部分
+# 如果是第一次运行，初始化默认值
+if "specificity_weight" not in st.session_state:
+    st.session_state.specificity_weight = 0.2
+if "sensitivity_weight" not in st.session_state:
+    st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
+# 当 specificity 改变时，自动更新 sensitivity
+def update_sensitivity():
+    st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
+
+
 st.markdown('<div class="section-header">Parameter setting</div>', unsafe_allow_html=True)
 with st.container():
     # 第一行参数：数据库选择 + M/z容差
@@ -734,6 +744,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
