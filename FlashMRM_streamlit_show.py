@@ -642,7 +642,7 @@ with st.container():
             border_color="#F0AD4E",
         )
     with col7:
-        senw_bg = "#d0d9ff"   
+        senw_bg = "#f3e5f5"   
         st_yled.number_input(
             "Sensitivity weight:",
             min_value=0.0,
@@ -652,7 +652,6 @@ with st.container():
             key="sensitivity_weight",
             help="Automatically calculated as 1 - Specificity weight",
             background_color=senw_bg,
-            border_color="#F0AD4E",
         )
 
 # 计算区域：按钮 + 进度条
@@ -760,6 +759,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
