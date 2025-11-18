@@ -162,13 +162,29 @@ st.markdown("""
         font-size: 18px !important;
         height: 45px !important;
     }
-    /* ========== 自定义 Input mode -> Input InChIKey 输入框颜色 ========== */
+    
+    /* Single mode 右侧 InChIKey 输入框（key = inchikey_input_active） */
     [data-testid="stTextInput-inchikey_input_active"] > div > div {
-        background-color: #e8f4ff !important;   /* 背景色 */
+        background-color: #e8f4ff !important;   /* 外层背景色 */
+        border: 1px solid #1f77b4 !important;   /* 外层边框色 */
+        border-radius: 4px !important;
     }
+    
     /* 真正的输入框本体 */
     [data-testid="stTextInput-inchikey_input_active"] > div > div > input {
         background-color: #e8f4ff !important;   /* 把 input 的白背景改掉 */
+        color: #003366 !important;              /* 输入文字颜色 */
+    }
+    
+    /* 聚焦时（点击输入框）高亮边框和阴影 */
+    [data-testid="stTextInput-inchikey_input_active"] > div > div:focus-within {
+        border-color: #1f77b4 !important;
+        box-shadow: 0 0 0 1px #1f77b4 !important;
+    }
+    
+    /* placeholder 的颜色 */
+    [data-testid="stTextInput-inchikey_input_active"] input::placeholder {
+        color: #6f8faf !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -791,6 +807,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
