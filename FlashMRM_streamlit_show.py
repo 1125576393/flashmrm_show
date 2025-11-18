@@ -545,7 +545,7 @@ with col_b:
             value=st.session_state.get("inchikey_value", ""),
             placeholder="Input InChIKey",
             label_visibility="collapsed",
-        )
+            )
         if inchikey_input:
             st.session_state.inchikey_value = inchikey_input
         st.file_uploader(
@@ -786,6 +786,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
