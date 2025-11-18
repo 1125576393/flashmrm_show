@@ -595,7 +595,6 @@ with st.container():
 
     # 第二行参数：RT容差 + RT偏移
     col4, col5 = st.columns([1, 1])
-    rt_bg  = st_yled.color_picker("RT tolerance 背景色", "#FFF3CD")
     with col4:
         rt_tolerance = st_yled.number_input(
             "RT tolerance:",
@@ -605,6 +604,7 @@ with st.container():
             step=0.1,
             help="Retention time matching tolerance, default 2.0 minutes",
             key="rt_tolerance",
+            rt_bg  = st_yled.color_picker("RT tolerance 背景色", "#FFF3CD"),
             background_color=rt_bg,
             border_color="#F0AD4E",
         )
@@ -632,15 +632,13 @@ with st.container():
             key="specificity_weight",
             on_change=update_sensitivity,   # 改 specificity 时自动更新 sensitivity
         )
-
     with col7:
-        # 这里不再自己计算，也不再用别的 key
         st.number_input(
             "Sensitivity weight:",
             min_value=0.0,
             max_value=1.0,
             step=0.05,
-            disabled=True,  # 只读显示
+            disabled=True, 
             key="sensitivity_weight",
             help="Automatically calculated as 1 - Specificity weight",
         )
@@ -750,6 +748,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
