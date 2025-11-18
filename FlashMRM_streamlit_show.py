@@ -103,10 +103,6 @@ st.markdown("""
         font-size: 18px !important;
         height: 45px !important;
     }
-     /* 只调节“Select Input mode / Batch mode”之间的垂直间距 */
-    [data-testid="stRadio"] [role="radiogroup"] > div:nth-child(2) {
-        margin-top: 48px !important;  /* 这里控制 Batch mode 往下移多少 */
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -458,21 +454,33 @@ st.markdown('<div class="section-header">Select Input mode</div>', unsafe_allow_
 col_a, col_b = st.columns([1, 3], gap="small")
 
 with col_a:
-    st.markdown(
-        """
-        <div class="input-mode-radio"
-             style="display:flex; height:100%; align-items:center; justify-content:flex-end; padding-right:8px;">
-        """,
-        unsafe_allow_html=True
+    current_mode = st.session_state.get("input_mode", "Single mode")
+    single_active = (current_mode == "Single mode")
+    batch_active = (current_mode == "Batch mode")
+
+    single_clicked = st.button(
+        "Single mode",
+        key="single_mode_btn",
+        use_container_width=True,
+        type="primary" if single_active else "secondary"
     )
-    selected_mode = st.radio(
-        "Select Input mode:",
-        ["Single mode", "Batch mode"],
-        index=0 if st.session_state.get("input_mode", "Single mode") == "Single mode" else 1,
-        key="mode_selector",
-        label_visibility="collapsed"
+    st.write("")
+
+    batch_clicked = st.button(
+        "Batch mode",
+        key="batch_mode_btn",
+        use_container_width=True,
+        type="primary" if batch_active else "secondary"
     )
-    st.markdown("</div>", unsafe_allow_html=True)
+
+    if single_clicked:
+        st.session_state.input_mode = "Single mode"
+        st.session_state.uploaded_data = None
+        st.session_state.upload_status = None
+    elif batch_clicked:
+        st.session_state.input_mode = "Batch mode"
+        st.session_state.uploaded_data = None
+        st.session_state.upload_status = None
 
 with col_b:
     st.markdown(
@@ -481,7 +489,10 @@ with col_b:
         """,
         unsafe_allow_html=True
     )
-    if selected_mode == "Single mode":
+
+    mode = st.session_state.get("input_mode", "Single mode")
+
+    if mode == "Single mode":
         inchikey_input = st.text_input(
             "Single mode:",
             value=st.session_state.get("inchikey_value", ""),
@@ -517,7 +528,8 @@ with col_b:
         )
         if batch_input is not None:
             st.session_state.batch_file = batch_input
-    st.markdown("</div>", unsafe_allow_html=True)  
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # 更新输入模式
 if selected_mode != st.session_state.input_mode:
@@ -739,6 +751,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
