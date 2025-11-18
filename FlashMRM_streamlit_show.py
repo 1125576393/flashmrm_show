@@ -583,7 +583,7 @@ with st.container():
             help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database"
         )
     with col2:
-        mz_bg = "#fff59d"
+        mz_bg = "#fff9c4"
         mz_tolerance = st_yled.number_input(
             "M/z tolerance:",
             min_value=0.0,
@@ -760,6 +760,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
