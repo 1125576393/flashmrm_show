@@ -103,9 +103,9 @@ st.markdown("""
         font-size: 18px !important;
         height: 45px !important;
     }
-     /* 只调节“Select Input mode”左侧单选框的间距 */
-    .input-mode-radio [data-testid="stRadio"] > div[role="radiogroup"] > div:nth-child(2) {
-        margin-top: 24px;  /* 根据视觉效果可以改大/改小，比如 12~24px */
+     /* 只调节“Select Input mode / Batch mode”之间的垂直间距 */
+    [data-testid="stRadio"] [role="radiogroup"] > div:nth-child(2) {
+        margin-top: 24px !important;  /* 这里控制 Batch mode 往下移多少 */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -739,6 +739,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
