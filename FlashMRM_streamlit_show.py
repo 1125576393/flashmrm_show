@@ -2,8 +2,67 @@ import streamlit as st
 import pandas as pd
 import time
 from FlashMRM import Config, MRMOptimizer
+import uuid
 import os
 
+# ======= 可独立调色的输入框组件 ========= #
+def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc"):
+    """可自定义颜色的 text_input"""
+    if key is None:
+        key = str(uuid.uuid4())
+    unique_class = f"ci-{key}"
+    css = f"""
+    <style>
+    .{unique_class} > div > div {{
+        background-color: {bg} !important;
+        border: 1px solid {border} !important;
+        border-radius: 4px !important;
+    }}
+    .{unique_class} > div > div > input {{
+        color: {text} !important;
+        background-color: {bg} !important;
+    }}
+    .{unique_class} > div > div:focus-within {{
+        border-color: {border} !important;
+        box-shadow: 0 0 0 1px {border} !important;
+    }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+    with st.container():
+        st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
+        value = st.text_input(label, key=key)
+        st.markdown('</div>', unsafe_allow_html=True)
+    return value
+def colored_number_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc"):
+    """可自定义颜色的 number_input"""
+    if key is None:
+        key = str(uuid.uuid4())
+    unique_class = f"ci-{key}"
+    css = f"""
+    <style>
+    .{unique_class} > div > div {{
+        background-color: {bg} !important;
+        border: 1px solid {border} !important;
+        border-radius: 4px !important;
+    }}
+    .{unique_class} > div > div > input {{
+        color: {text} !important;
+        background-color: {bg} !important;
+    }}
+    .{unique_class} > div > div:focus-within {{
+        border-color: {border} !important;
+        box-shadow: 0 0 0 1px {border} !important;
+    }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+    with st.container():
+        st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
+        value = st.number_input(label, key=key)
+        st.markdown('</div>', unsafe_allow_html=True)
+    return value
+    
 st.set_page_config(
     page_title="FlashMRM",
     page_icon="786a50646609813e89cc2017082525a3.png",
@@ -102,6 +161,10 @@ st.markdown("""
         font-family: Arial, sans-serif !important;
         font-size: 18px !important;
         height: 45px !important;
+    }
+    /* ========== 自定义 Input mode -> Input InChIKey 输入框颜色 ========== */
+    [data-testid="stTextInput-inchikey_input_active"] > div > div {
+        background-color: #e8f4ff !important;   /* 背景色 */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -724,6 +787,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
