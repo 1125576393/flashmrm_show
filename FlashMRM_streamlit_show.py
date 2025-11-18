@@ -454,33 +454,20 @@ st.markdown('<div class="section-header">Select Input mode</div>', unsafe_allow_
 col_a, col_b = st.columns([1, 3], gap="small")
 
 with col_a:
-    current_mode = st.session_state.get("input_mode", "Single mode")
-    single_active = (current_mode == "Single mode")
-    batch_active = (current_mode == "Batch mode")
-
-    single_clicked = st.button(
-        "Single mode",
-        key="single_mode_btn",
-        use_container_width=True,
-        type="primary" if single_active else "secondary"
+    st.markdown(
+        """
+        <div style="display:flex; height:100%; align-items:center; justify-content:flex-end; padding-right:8px;">
+        """,
+        unsafe_allow_html=True
     )
-    st.write("")
-
-    batch_clicked = st.button(
-        "Batch mode",
-        key="batch_mode_btn",
-        use_container_width=True,
-        type="primary" if batch_active else "secondary"
+    selected_mode = st.radio(
+        "Select Input mode:",
+        ["Input InChIKey", "Batch mode"],
+        index=0 if st.session_state.get("input_mode", "Input InChIKey") == "Input InChIKey" else 1,
+        key="mode_selector",
+        label_visibility="collapsed"
     )
-
-    if single_clicked:
-        st.session_state.input_mode = "Single mode"
-        st.session_state.uploaded_data = None
-        st.session_state.upload_status = None
-    elif batch_clicked:
-        st.session_state.input_mode = "Batch mode"
-        st.session_state.uploaded_data = None
-        st.session_state.upload_status = None
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with col_b:
     st.markdown(
@@ -489,14 +476,11 @@ with col_b:
         """,
         unsafe_allow_html=True
     )
-
-    mode = st.session_state.get("input_mode", "Single mode")
-
-    if mode == "Single mode":
+    if selected_mode == "Input InChIKey":
         inchikey_input = st.text_input(
-            "Single mode:",
+            "Input InChIKey:",
             value=st.session_state.get("inchikey_value", ""),
-            placeholder="For example: Input InChIKey",
+            placeholder="For example: KXRPCFINVWWFHQ-UHFFFAOYSA-N",
             label_visibility="collapsed",
             key="inchikey_input_active"
         )
@@ -512,7 +496,7 @@ with col_b:
         )
     else:
         st.text_input(
-            "Single mode:",
+            "Input InChIKey:",
             value="",
             placeholder="Disable individual input in batch mode",
             label_visibility="collapsed",
@@ -528,8 +512,7 @@ with col_b:
         )
         if batch_input is not None:
             st.session_state.batch_file = batch_input
-
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)  
 
 # 更新输入模式
 if selected_mode != st.session_state.input_mode:
@@ -751,6 +734,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
