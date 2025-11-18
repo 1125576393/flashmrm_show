@@ -462,8 +462,8 @@ with col_a:
     )
     selected_mode = st.radio(
         "Select Input mode:",
-        ["Input InChIKey", "Batch mode"],
-        index=0 if st.session_state.get("input_mode", "Input InChIKey") == "Input InChIKey" else 1,
+        ["Single mode", "Batch mode"],
+        index=0 if st.session_state.get("input_mode", "Single mode") == "Single mode" else 1,
         key="mode_selector",
         label_visibility="collapsed"
     )
@@ -476,11 +476,11 @@ with col_b:
         """,
         unsafe_allow_html=True
     )
-    if selected_mode == "Input InChIKey":
+    if selected_mode == "Single mode":
         inchikey_input = st.text_input(
-            "Input InChIKey:",
+            "Single mode:",
             value=st.session_state.get("inchikey_value", ""),
-            placeholder="For example: KXRPCFINVWWFHQ-UHFFFAOYSA-N",
+            placeholder="Input InChIKey",
             label_visibility="collapsed",
             key="inchikey_input_active"
         )
@@ -496,7 +496,7 @@ with col_b:
         )
     else:
         st.text_input(
-            "Input InChIKey:",
+            "Single mode:",
             value="",
             placeholder="Disable individual input in batch mode",
             label_visibility="collapsed",
@@ -651,9 +651,8 @@ if st.session_state.calculation_complete:
     result_df = st.session_state.result_df
     
     if not result_df.empty:
-        # 显示结果表格（隐藏过长的best5_combinations列，默认不显示）
         display_columns = [col for col in result_df.columns if col != 'best5_combinations']
-        st.dataframe(result_df[display_columns], use_container_width=False)  # 非必要宽度，用默认content
+        st.dataframe(result_df[display_columns], use_container_width=False) 
         
         csv_data = result_df.to_csv(index=False, encoding='utf-8').encode('utf-8')
         st.download_button(
@@ -665,7 +664,6 @@ if st.session_state.calculation_complete:
             key="download_result"
         )
 
-         # ====== 新增开始：联动“最佳5组离子对”视图 ======
     st.markdown('<div class="section-header">Best 5 ion-pair combinations</div>', unsafe_allow_html=True)
 
     IONPAIR_COLUMNS = [
@@ -677,21 +675,17 @@ if st.session_state.calculation_complete:
 
     def _normalize_top5_rows(raw_list):
         import pandas as pd
-        # 1) 解析：可能是字符串“processing failed / no combination”等
         if not isinstance(raw_list, (list, tuple)):
             df = pd.DataFrame(columns=IONPAIR_COLUMNS)
         else:
             df = pd.DataFrame(raw_list)
 
-        # 2) 补齐缺失列为0（兼容不同后端字段）
         for c in IONPAIR_COLUMNS:
             if c not in df.columns:
                 df[c] = 0
 
-        # 3) 只保留定义好的列并取前5
         df = df[IONPAIR_COLUMNS].head(5)
 
-        # 4) 若不足5行，用0补齐
         if len(df) < 5:
             import pandas as pd
             n_missing = 5 - len(df)
@@ -699,7 +693,6 @@ if st.session_state.calculation_complete:
             df = pd.concat([df, pd.DataFrame([zero_row]*n_missing)], ignore_index=True)
         return df
 
-    # —— 选择要查看的化合物（默认第1个，满足“以Calculation results表格中第一个化合物为默认”） ——
     result_df = st.session_state.result_df.copy()
     result_df['_display_key'] = result_df.apply(
         lambda r: f"{str(r.get('chemical',''))} | {str(r.get('InChIKey',''))}", axis=1
@@ -721,10 +714,7 @@ if st.session_state.calculation_complete:
         mime="text/csv",
         key="download_best5"
     )
-    # ====== 新增结束 ======
         
-    # 计算统计：删除不存在的'other_condition'列，仅基于chemical列有效值判断
-    # 成功的条件：chemical不为空且不是错误/未找到标记
     success_conditions = (
         result_df['chemical'].notna() & 
         ~result_df['chemical'].isin(['not found', 'calculation failed', 'error', 'global error'])
@@ -734,6 +724,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
