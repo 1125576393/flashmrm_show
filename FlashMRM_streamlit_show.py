@@ -6,8 +6,8 @@ import uuid
 import os
 
 # ======= 可独立调色的输入框组件 ========= #
-def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc"):
-    """可自定义颜色的 text_input"""
+def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc", **kwargs):
+    """可自定义颜色的 text_input，其他参数通过 kwargs 透传"""
     if key is None:
         key = str(uuid.uuid4())
     unique_class = f"ci-{key}"
@@ -31,9 +31,11 @@ def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#c
     st.markdown(css, unsafe_allow_html=True)
     with st.container():
         st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
-        value = st.text_input(label, key=key)
+        # 把 placeholder、label_visibility 等都从 kwargs 透传进去
+        value = st.text_input(label, key=key, **kwargs)
         st.markdown('</div>', unsafe_allow_html=True)
     return value
+
 def colored_number_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc"):
     """可自定义颜色的 number_input"""
     if key is None:
@@ -161,30 +163,6 @@ st.markdown("""
         font-family: Arial, sans-serif !important;
         font-size: 18px !important;
         height: 45px !important;
-    }
-    
-    /* Single mode 右侧 InChIKey 输入框（key = inchikey_input_active） */
-    [data-testid="stTextInput-inchikey_input_active"] > div > div {
-        background-color: #e8f4ff !important;   /* 外层背景色 */
-        border: 1px solid #1f77b4 !important;   /* 外层边框色 */
-        border-radius: 4px !important;
-    }
-    
-    /* 真正的输入框本体 */
-    [data-testid="stTextInput-inchikey_input_active"] > div > div > input {
-        background-color: #e8f4ff !important;   /* 把 input 的白背景改掉 */
-        color: #003366 !important;              /* 输入文字颜色 */
-    }
-    
-    /* 聚焦时（点击输入框）高亮边框和阴影 */
-    [data-testid="stTextInput-inchikey_input_active"] > div > div:focus-within {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 1px #1f77b4 !important;
-    }
-    
-    /* placeholder 的颜色 */
-    [data-testid="stTextInput-inchikey_input_active"] input::placeholder {
-        color: #6f8faf !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -559,13 +537,14 @@ with col_b:
         """,
         unsafe_allow_html=True
     )
-    if selected_mode == "Single mode":
-        inchikey_input = st.text_input(
+     if selected_mode == "Single mode":
+        inchikey_input = colored_text_input(
             "Single mode:",
+            key="inchikey_input_active",
+            bg="#e8f4ff",            # 背景色（淡蓝，随你改）
             value=st.session_state.get("inchikey_value", ""),
             placeholder="Input InChIKey",
             label_visibility="collapsed",
-            key="inchikey_input_active"
         )
         if inchikey_input:
             st.session_state.inchikey_value = inchikey_input
@@ -807,6 +786,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
