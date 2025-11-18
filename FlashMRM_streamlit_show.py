@@ -583,14 +583,17 @@ with st.container():
             help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database"
         )
     with col2:
-         mz_tolerance = st.number_input(
+        mz_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        mz_tolerance = st_yled.number_input(
             "M/z tolerance:",
             min_value=0.0,
             max_value=10.0,
             value=0.7,
             step=0.1,
             help="Mass-to-charge ratio matching tolerance, default 0.7",
-            key="mz_tolerance"
+            key="mz_tolerance",
+            background_color=mz_bg,
+            border_color="#F0AD4E",
         )
 
     # 第二行参数：RT容差 + RT偏移
@@ -609,20 +612,24 @@ with st.container():
             border_color="#F0AD4E",
         )
     with col5:
-        rt_offset = st.number_input(
+        ro_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        rt_offset = st_yled.number_input(
             "RT offset:",
             min_value=-10.0,
             max_value=10.0,
             value=0.0,
             step=0.5,
             help="Retention time offset, default 0.0 minutes",
-            key="rt_offset"
+            key="rt_offset",
+            background_color=ro_bg,
+            border_color="#F0AD4E",
         )
 
     # 第三行参数：特异性权重 + 
     col6, col7 = st.columns([1, 1])
     with col6:
-        specificity_weight = st.number_input(
+        spew_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        specificity_weight = st_yled.number_input(
             "Specificity weight:",
             min_value=0.0,
             max_value=1.0,
@@ -630,10 +637,13 @@ with st.container():
             step=0.05,
             help="Specificity weight (0–1), default 0.2",
             key="specificity_weight",
-            on_change=update_sensitivity,   # 改 specificity 时自动更新 sensitivity
+            on_change=update_sensitivity,
+            background_color=spew_bg,
+            border_color="#F0AD4E",
         )
     with col7:
-        st.number_input(
+        senw_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        st_yled.number_input(
             "Sensitivity weight:",
             min_value=0.0,
             max_value=1.0,
@@ -641,6 +651,8 @@ with st.container():
             disabled=True, 
             key="sensitivity_weight",
             help="Automatically calculated as 1 - Specificity weight",
+            background_color=senw_bg,
+            border_color="#F0AD4E",
         )
 
 # 计算区域：按钮 + 进度条
@@ -748,6 +760,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
