@@ -104,8 +104,8 @@ st.markdown("""
         height: 45px !important;
     }
      /* 只调节“Select Input mode”左侧单选框的间距 */
-    .input-mode-radio [role="radiogroup"] > label:nth-child(2) {
-        margin-top: 30px;  /* 根据视觉效果可以改大/改小，比如 12~24px */
+    .input-mode-radio [data-testid="stRadio"] > div[role="radiogroup"] > div:nth-child(2) {
+        margin-top: 24px;  /* 根据视觉效果可以改大/改小，比如 12~24px */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -527,12 +527,11 @@ if selected_mode != st.session_state.input_mode:
     st.rerun()
 
 # 上传按钮
-# 上传按钮（居中）
-col_u1, col_u2, col_u3 = st.columns([3, 2, 3])
+col_u1, col_u2, col_u3 = st.columns([1, 1, 1])
 with col_u2:
     upload_clicked = st.button(
         "Upload",
-        use_container_width=True,  # 在中间列内自动铺满，视觉上更居中
+        use_container_width=True,
         key="upload_button",
         disabled=st.session_state.calculation_in_progress
     )
@@ -740,6 +739,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
