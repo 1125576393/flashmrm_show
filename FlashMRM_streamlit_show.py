@@ -642,7 +642,7 @@ with st.container():
             border_color="#F0AD4E",
         )
     with col7:
-        senw_bg = "#91a7ff"   
+        senw_bg = "#d0d9ff"   
         st_yled.number_input(
             "Sensitivity weight:",
             min_value=0.0,
@@ -760,6 +760,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
