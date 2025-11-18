@@ -615,7 +615,8 @@ with st.container():
             value=0.2,
             step=0.05,
             help="Specificity weight (0–1), default 0.2",
-            key="specificity_weight"
+            key="specificity_weight",
+            on_change=update_sensitivity,
         )
     with col7:
         sensitivity_weight = 1 - specificity_weight  # 自动计算
@@ -623,8 +624,6 @@ with st.container():
             "Sensitivity weight:",
             min_value=0.0,
             max_value=1.0,
-            value=sensitivity_weight,
-            step=0.01,
             disabled=True,  # ❗让输入框不可输入
             key="sensitivity_weight_display",
             help="Automatically calculated as 1 - Specificity weight"
@@ -735,6 +734,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
