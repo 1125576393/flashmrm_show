@@ -104,34 +104,6 @@ st.markdown("""
         font-size: 18px !important;
         height: 45px !important;
     }
-    
-    /* 1. 保持你原有的 multiselect 标签样式 */
-    span[data-baseweb="tag"] {
-      color: white;
-      background-color: gray;
-    }
-    span[data-baseweb="tag"]:has(span[title="Yellow"]) {
-      color: black;
-      background-color: yellow;
-    }
-    span[data-baseweb="tag"]:has(span[title="Red"]) {
-      color: black;
-      background-color: red;
-    }
-    span[data-baseweb="tag"]:has(span[title="Green"]) {
-      color: black;
-      background-color: green;
-    }
-    /* 2. 新增：为右侧列 (col_b) 中的输入框和上传框添加统一背景 */
-    .col_b > div.st-eb {
-        background-color: #e8f4ff; /* 使用一个淡灰色作为背景，你可以随意修改这个颜色码 */
-        border-radius: 0.5rem;      /* 保持和原生组件一致的圆角 */
-        padding: 0.5rem;            /* 添点内边距，让背景不会紧贴输入框 */
-    }
-    /* 3. 新增：为右侧列中的禁用状态输入框设置不同背景 */
-    .col_b > div.st-eb [aria-disabled="true"] {
-        background-color: #f8f9fa; /* 禁用状态使用一个更浅的颜色 */
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -753,6 +725,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
