@@ -2,9 +2,11 @@ import streamlit as st
 import pandas as pd
 import time
 from FlashMRM import Config, MRMOptimizer
-import uuid
+import st_yled
 import os
-    
+
+st_yled.init()  # 每个页面都要先初始化
+
 st.set_page_config(
     page_title="FlashMRM",
     page_icon="786a50646609813e89cc2017082525a3.png",
@@ -593,15 +595,18 @@ with st.container():
 
     # 第二行参数：RT容差 + RT偏移
     col4, col5 = st.columns([1, 1])
+    rt_bg  = st_yled.color_picker("RT tolerance 背景色", "#FFF3CD")
     with col4:
-        rt_tolerance = st.number_input(
+        rt_tolerance = st_yled.number_input(
             "RT tolerance:",
             min_value=0.0,
             max_value=10.0,
             value=2.0,
             step=0.1,
             help="Retention time matching tolerance, default 2.0 minutes",
-            key="rt_tolerance"
+            key="rt_tolerance",
+            background_color=rt_bg,
+            border_color="#F0AD4E",
         )
     with col5:
         rt_offset = st.number_input(
@@ -745,6 +750,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
