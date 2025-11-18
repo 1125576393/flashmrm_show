@@ -625,7 +625,6 @@ with st.container():
             max_value=1.0,
             value=sensitivity_weight,
             step=0.0,
-            format="%.3f",
             disabled=True,  # ❗让输入框不可输入
             key="sensitivity_weight_display",
             help="Automatically calculated as 1 - Specificity weight"
@@ -736,6 +735,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
