@@ -105,7 +105,7 @@ st.markdown("""
     }
      /* 只调节“Select Input mode / Batch mode”之间的垂直间距 */
     [data-testid="stRadio"] [role="radiogroup"] > div:nth-child(2) {
-        margin-top: 24px !important;  /* 这里控制 Batch mode 往下移多少 */
+        margin-top: 48px !important;  /* 这里控制 Batch mode 往下移多少 */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -739,6 +739,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
