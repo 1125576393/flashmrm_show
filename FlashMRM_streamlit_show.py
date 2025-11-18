@@ -583,7 +583,7 @@ with st.container():
             help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database"
         )
     with col2:
-        mz_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        mz_bg = #F0F4F8"
         mz_tolerance = st_yled.number_input(
             "M/z tolerance:",
             min_value=0.0,
@@ -593,13 +593,13 @@ with st.container():
             help="Mass-to-charge ratio matching tolerance, default 0.7",
             key="mz_tolerance",
             background_color=mz_bg,
-            border_color="#F0AD4E",
+            border_color="#E8EDF3",
         )
 
     # 第二行参数：RT容差 + RT偏移
     col4, col5 = st.columns([1, 1])
     with col4:
-        rt_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+        rt_bg = "#FFF3CD"   
         rt_tolerance = st_yled.number_input(
             "RT tolerance:",
             min_value=0.0,
@@ -760,6 +760,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
