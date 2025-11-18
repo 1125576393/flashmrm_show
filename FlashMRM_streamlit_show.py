@@ -5,9 +5,9 @@ from FlashMRM import Config, MRMOptimizer
 import uuid
 import os
 
-# ======= 可独立调色的输入框组件 ========= #
+# ========= 可单独调色的 text_input =========
 def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc", **kwargs):
-    """可自定义颜色的 text_input，其他参数通过 kwargs 透传"""
+    """给单个 text_input 上颜色，其它参数通过 kwargs 透传"""
     if key is None:
         key = str(uuid.uuid4())
     unique_class = f"ci-{key}"
@@ -31,39 +31,10 @@ def colored_text_input(label, key=None, bg="#ffffff", text="#000000", border="#c
     st.markdown(css, unsafe_allow_html=True)
     with st.container():
         st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
-        # 把 placeholder、label_visibility 等都从 kwargs 透传进去
         value = st.text_input(label, key=key, **kwargs)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
     return value
-
-def colored_number_input(label, key=None, bg="#ffffff", text="#000000", border="#cccccc"):
-    """可自定义颜色的 number_input"""
-    if key is None:
-        key = str(uuid.uuid4())
-    unique_class = f"ci-{key}"
-    css = f"""
-    <style>
-    .{unique_class} > div > div {{
-        background-color: {bg} !important;
-        border: 1px solid {border} !important;
-        border-radius: 4px !important;
-    }}
-    .{unique_class} > div > div > input {{
-        color: {text} !important;
-        background-color: {bg} !important;
-    }}
-    .{unique_class} > div > div:focus-within {{
-        border-color: {border} !important;
-        box-shadow: 0 0 0 1px {border} !important;
-    }}
-    </style>
-    """
-    st.markdown(css, unsafe_allow_html=True)
-    with st.container():
-        st.markdown(f'<div class="{unique_class}">', unsafe_allow_html=True)
-        value = st.number_input(label, key=key)
-        st.markdown('</div>', unsafe_allow_html=True)
-    return value
+# ========= 可单独调色的 text_input 结束 =========
     
 st.set_page_config(
     page_title="FlashMRM",
@@ -786,6 +757,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
