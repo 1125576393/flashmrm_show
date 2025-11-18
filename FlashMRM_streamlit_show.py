@@ -561,7 +561,7 @@ if st.session_state.uploaded_data:
 # 参数设置部分
 st.markdown('<div class="section-header">Parameter setting</div>', unsafe_allow_html=True)
 with st.container():
-    # 第一行参数：数据库选择
+    # 第一行参数：数据库选择 + M/z容差
     col1, col2 = st.columns([2, 2])
     with col1:
         intf_data = st.selectbox(
@@ -572,12 +572,7 @@ with st.container():
             help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database"
         )
     with col2:
-        st.write("")  # 占位对齐
-
-    # 第二行参数：M/z容差 + RT偏移
-    col4, col5 = st.columns([1, 1])
-    with col4:
-        mz_tolerance = st.number_input(
+         mz_tolerance = st.number_input(
             "M/z tolerance:",
             min_value=0.0,
             max_value=10.0,
@@ -585,6 +580,19 @@ with st.container():
             step=0.1,
             help="Mass-to-charge ratio matching tolerance, default 0.7",
             key="mz_tolerance"
+        )
+
+    # 第二行参数：RT容差 + RT偏移
+    col4, col5 = st.columns([1, 1])
+    with col4:
+        rt_tolerance = st.number_input(
+            "RT tolerance:",
+            min_value=0.0,
+            max_value=10.0,
+            value=2.0,
+            step=0.1,
+            help="Retention time matching tolerance, default 2.0 minutes",
+            key="rt_tolerance"
         )
     with col5:
         rt_offset = st.number_input(
@@ -597,20 +605,10 @@ with st.container():
             key="rt_offset"
         )
 
-    # 第三行参数：RT容差 + 特异性权重
+    # 第三行参数：特异性权重 + 
     col6, col7 = st.columns([1, 1])
     with col6:
-        rt_tolerance = st.number_input(
-            "RT tolerance:",
-            min_value=0.0,
-            max_value=10.0,
-            value=2.0,
-            step=0.1,
-            help="Retention time matching tolerance, default 2.0 minutes",
-            key="rt_tolerance"
-        )
-    with col7:
-        specificity_weight = st.number_input(
+         specificity_weight = st.number_input(
             "Specificity weight:",
             min_value=0.0,
             max_value=1.0,
@@ -618,6 +616,19 @@ with st.container():
             step=0.05,
             help="Specificity weight (0–1), default 0.2",
             key="specificity_weight"
+        )
+    with col7:
+        sensitivity_weight = 1 - specificity_weight  # 自动计算
+        st.number_input(
+            "Sensitivity weight:",
+            min_value=0.0,
+            max_value=1.0,
+            value=sensitivity_weight,
+            step=0.0,
+            format="%.3f",
+            disabled=True,  # ❗让输入框不可输入
+            key="sensitivity_weight_display",
+            help="Automatically calculated as 1 - Specificity weight"
         )
 
 # 计算区域：按钮 + 进度条
@@ -725,6 +736,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
