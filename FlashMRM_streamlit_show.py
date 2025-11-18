@@ -105,7 +105,7 @@ st.markdown("""
     }
      /* 只调节“Select Input mode”左侧单选框的间距 */
     .input-mode-radio [role="radiogroup"] > label:nth-child(2) {
-        margin-top: 16px;  /* 根据视觉效果可以改大/改小，比如 12~24px */
+        margin-top: 30px;  /* 根据视觉效果可以改大/改小，比如 12~24px */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -740,6 +740,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
