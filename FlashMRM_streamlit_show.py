@@ -46,7 +46,7 @@ st.markdown("""
         font-family: Arial, sans-serif !important;
         width: 150px;
         font-weight: bold;
-        font-size: 24px !important;
+        font-size: 36px !important;
     }
     .result-container {
         margin-top: 30px;
@@ -758,6 +758,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
