@@ -220,7 +220,7 @@ def run_flashmrm_calculation():
         
         # 2. 获取目标InChIKey列表
         uploaded_data = st.session_state.uploaded_data
-        if uploaded_data["type"] == "Single mode":
+        if uploaded_data["type"] == "single_inchikey":
             target_inchikeys = [uploaded_data["data"]]
             config.SINGLE_COMPOUND_MODE = True
             config.TARGET_INCHIKEY = target_inchikeys[0]
@@ -765,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
