@@ -453,69 +453,69 @@ You can download the demo dataset used for testing here:
                 st.write("\n".join(error_msgs))
 
 # 输入模式选择
-st.markdown('<div class="section-header">Select Input mode</div>', unsafe_allow_html=True)
-col_a, col_b = st.columns([1, 3], gap="small")
+with st.expander("Select Input mode"):
+    col_a, col_b = st.columns([1, 3], gap="small")
 
-with col_a:
-    st.markdown(
-        """
-        <div style="display:flex; height:100%; align-items:center; justify-content:flex-end; padding-right:8px;">
-        """,
-        unsafe_allow_html=True
-    )
-    selected_mode = st.radio(
-        "Select Input mode:",
-        ["Single mode", "Batch mode"],
-        index=0 if st.session_state.get("input_mode", "Single mode") == "Single mode" else 1,
-        key="mode_selector",
-        label_visibility="collapsed"
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
+    with col_a:
+        st.markdown(
+            """
+            <div style="display:flex; height:100%; align-items:center; justify-content:flex-end; padding-right:8px;">
+            """,
+            unsafe_allow_html=True
+        )
+        selected_mode = st.radio(
+            "Select Input mode:",
+            ["Single mode", "Batch mode"],
+            index=0 if st.session_state.get("input_mode", "Single mode") == "Single mode" else 1,
+            key="mode_selector",
+            label_visibility="collapsed"
+        )
+        st.markdown("</div>", unsafe_allow_html=True)
 
-with col_b:
-    st.markdown(
-        """
-        <div style="display:flex; flex-direction:column; gap:0.35rem; width:100%;">
-        """,
-        unsafe_allow_html=True
-    )
-    if selected_mode == "Single mode":
-        inchikey_input = st.text_input(
-            "Single mode:",
-            key="inchikey_input_active",
-            value=st.session_state.get("inchikey_value", ""),
-            placeholder="Input InChIKey",
-            label_visibility="collapsed",
+    with col_b:
+        st.markdown(
+            """
+            <div style="display:flex; flex-direction:column; gap:0.35rem; width:100%;">
+            """,
+            unsafe_allow_html=True
         )
-        if inchikey_input:
-            st.session_state.inchikey_value = inchikey_input
-        st.file_uploader(
-            "Batch mode:",
-            type=['txt', 'csv'],
-            label_visibility="collapsed",
-            key="batch_input_disabled",
-            disabled=True,
-            help="Disable batch uploads in single-file mode"
-        )
-    else:
-        st.text_input(
-            "Single mode:",
-            value="",
-            placeholder="Disable individual input in batch mode",
-            label_visibility="collapsed",
-            key="inchikey_input_disabled",
-            disabled=True
-        )
-        batch_input = st.file_uploader(
-            "Batch mode:",
-            type=['txt', 'csv'],
-            help='Drag and drop files here. Supported formats: CSV (including an "InChIKey" column) and TXT (one InChIKey per line).',
-            label_visibility="collapsed",
-            key="batch_input_active"
-        )
-        if batch_input is not None:
-            st.session_state.batch_file = batch_input
-    st.markdown("</div>", unsafe_allow_html=True)  
+        if selected_mode == "Single mode":
+            inchikey_input = st.text_input(
+                "Single mode:",
+                key="inchikey_input_active",
+                value=st.session_state.get("inchikey_value", ""),
+                placeholder="Input InChIKey",
+                label_visibility="collapsed",
+            )
+            if inchikey_input:
+                st.session_state.inchikey_value = inchikey_input
+            st.file_uploader(
+                "Batch mode:",
+                type=['txt', 'csv'],
+                label_visibility="collapsed",
+                key="batch_input_disabled",
+                disabled=True,
+                help="Disable batch uploads in single-file mode"
+            )
+        else:
+            st.text_input(
+                "Single mode:",
+                value="",
+                placeholder="Disable individual input in batch mode",
+                label_visibility="collapsed",
+                key="inchikey_input_disabled",
+                disabled=True
+            )
+            batch_input = st.file_uploader(
+                "Batch mode:",
+                type=['txt', 'csv'],
+                help='Drag and drop files here. Supported formats: CSV (including an "InChIKey" column) and TXT (one InChIKey per line).',
+                label_visibility="collapsed",
+                key="batch_input_active"
+            )
+            if batch_input is not None:
+                st.session_state.batch_file = batch_input
+        st.markdown("</div>", unsafe_allow_html=True)  
 
 # 更新输入模式
 if selected_mode != st.session_state.input_mode:
@@ -765,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
