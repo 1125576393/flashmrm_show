@@ -739,7 +739,7 @@ if st.session_state.calculation_complete:
         lambda r: f"{str(r.get('chemical',''))} | {str(r.get('InChIKey',''))}", axis=1
     )
     selected_key = st.selectbox(
-        “Select”,
+        "",
         options=result_df['_display_key'].tolist(),
         index=0
     )
@@ -765,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
