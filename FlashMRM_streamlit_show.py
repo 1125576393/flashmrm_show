@@ -454,8 +454,7 @@ You can download the demo dataset used for testing here:
 
 # 输入模式选择
 with st.expander("Select Input mode"):
-    col_a, col_b = st.columns([1, 3], gap="small")
-
+    col_a, col_b = st.columns([1, 3])
     with col_a:
         st.markdown(
             """
@@ -471,7 +470,6 @@ with st.expander("Select Input mode"):
             label_visibility="collapsed"
         )
         st.markdown("</div>", unsafe_allow_html=True)
-
     with col_b:
         st.markdown(
             """
@@ -765,6 +763,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
