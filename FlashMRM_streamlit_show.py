@@ -560,7 +560,7 @@ if st.session_state.uploaded_data:
             if len(ud['data']) > 10:
                 st.write(f"... totle{len(ud['data'])}valid records")
 
-with st0container():
+with st.container():
     col0, col00 = st.columns([1, 1])
     with col0:
         st.write("")
@@ -765,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
