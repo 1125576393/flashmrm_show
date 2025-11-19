@@ -560,6 +560,12 @@ if st.session_state.uploaded_data:
             if len(ud['data']) > 10:
                 st.write(f"... totle{len(ud['data'])}valid records")
 
+with st0container():
+    col0, col00 = st.columns([1, 1])
+    with col0:
+        st.write("")
+    with col00:
+        st.write("")
 # 参数设置部分
 # 如果是第一次运行，初始化默认值
 if "specificity_weight" not in st.session_state:
@@ -759,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
