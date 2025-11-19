@@ -143,7 +143,7 @@ def process_uploaded_data():
                 st.session_state.upload_status = ("error", "InChIKey format is invalid! Standard format example: KXRPCFINVWWFHQ-UHFFFAOYSA-N")
                 return False
             st.session_state.uploaded_data = {
-                "type": "Single mode",
+                "type": "single_inchikey",
                 "data": inchikey,
                 "timestamp": time.time()
             }
@@ -400,11 +400,11 @@ if st.session_state.get('show_help', False):
     st.info("""
     **Instruction for Use**
 1. **Select Input mode**  
-   - *Single mode*: Enter a standard InChIKey (e.g., `KXRPCFINVWWFHQ-UHFFFAOYSA-N`).  
-   - *Batch mode*: Upload a CSV (containing column `InChIKey`) or a TXT file (one InChIKey per line).  
+   - *Single mode*: Enter a standard InChIKey (e.g., KXRPCFINVWWFHQ-UHFFFAOYSA-N).  
+   - *Batch mode*: Upload a CSV (containing column InChIKey) or a TXT file (one InChIKey per line).  
 2. Click **Upload** to validate and upload the data.  
 3. **Parameter setting (optional)**  
-   - *M/z tolerance*: mass-to-charge ratio tolerance (default 0.7)  
+   - *m/z tolerance*: mass-to-charge ratio tolerance (default 0.7)  
    - *RT tolerance*: retention time tolerance in minutes (default 2.0)  
    - *RT offset*: retention time offset in minutes (default 0.0)  
    - *Specificity weight*: (0–1), default 0.2  
@@ -765,6 +765,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
