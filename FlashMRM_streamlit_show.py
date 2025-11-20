@@ -514,26 +514,23 @@ with st.expander("Select Input mode"):
             if batch_input is not None:
                 st.session_state.batch_file = batch_input
         st.markdown("</div>", unsafe_allow_html=True)  
-
-# 更新输入模式
-if selected_mode != st.session_state.input_mode:
-    st.session_state.input_mode = selected_mode
-    st.session_state.uploaded_data = None  
-    st.session_state.upload_status = None
-    st.rerun()
-
-# 上传按钮
-col_u1, col_u2, col_u3 = st.columns([1, 1, 1])
-with col_u2:
-    upload_clicked = st.button(
-        "Upload",
-        use_container_width=True,
-        key="upload_button",
-        disabled=st.session_state.calculation_in_progress
-    )
-
-if upload_clicked:
-    process_uploaded_data()
+    # 更新输入模式
+    if selected_mode != st.session_state.input_mode:
+        st.session_state.input_mode = selected_mode
+        st.session_state.uploaded_data = None  
+        st.session_state.upload_status = None
+        st.rerun()
+    # 上传按钮
+    col_u1, col_u2, col_u3 = st.columns([1, 1, 1])
+    with col_u2:
+        upload_clicked = st.button(
+            "Upload",
+            use_container_width=True,
+            key="upload_button",
+            disabled=st.session_state.calculation_in_progress
+        )
+    if upload_clicked:
+        process_uploaded_data()
 
 # 显示上传状态
 if st.session_state.upload_status:
@@ -763,6 +760,7 @@ if st.session_state.calculation_complete:
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
 else:
     st.warning("No results generated. Please check your input data or parameter configuration！")
+
 
 
 
