@@ -695,7 +695,7 @@ if st.session_state.calculation_complete:
         CALCULATION_COLUMNS = [
             'chemical','Precursor_mz','InChIKey','RT',
             'MSMS1','MSMS2','CE_QQQ1','CE_QQQ2',
-            'max_score','max_sensitivity_score','max_specificity_score',
+            'max_score',
         ]
         for col in CALCULATION_COLUMNS:
             if col not in result_df.columns:
@@ -769,6 +769,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
