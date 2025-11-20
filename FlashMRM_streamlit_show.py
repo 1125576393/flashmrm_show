@@ -710,8 +710,7 @@ if st.session_state.calculation_complete:
 
     IONPAIR_COLUMNS = [
         'MSMS1','intensity1','CE1','MSMS2','intensity2','CE2',
-        'interference_level1','interference_level2','intensity_sum','interference_level_sum',
-        'sensitivity_score','specificity_score','intensity_score','interference_score','score',
+        'sensitivity_score','specificity_score',
         'hit_num','hit_rate','CE_QQQ1','CE_QQQ2'
     ]
 
@@ -764,6 +763,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
