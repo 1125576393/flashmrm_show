@@ -575,6 +575,14 @@ def sync_weights(changed: str):
     elif changed == "sensitivity":
         st.session_state.specificity_weight = 1 - st.session_state.sensitivity_weight
 
+st.markdown("""
+<style>
+label[for="rt_tolerance"] {
+    white-space: nowrap;
+}
+</style>
+""", unsafe_allow_html=True)
+
 with st.expander("Parameter Setting"):  
     with st.container():
         # 第一行参数：数据库选择 + M/z容差
@@ -606,10 +614,9 @@ with st.expander("Parameter Setting"):
     # 第二行参数：RT容差 + RT偏移
         col4, col5 = st.columns([1, 1])
         with col4:
-            st.write("Retention time tolerance:")
             rt_bg = "#F0F5FF"   
             rt_tolerance = st_yled.number_input(
-                "",
+                "Retention time tolerance:",
                 min_value=0.0,
                 max_value=10.0,
                 value=2.0,
@@ -617,7 +624,6 @@ with st.expander("Parameter Setting"):
                 help="Retention time matching tolerance, default 2.0 minutes",
                 key="rt_tolerance",
                 background_color=rt_bg,
-                label_visibility="collapsed"
             )
         with col5:
             ro_bg = "#F0F5FF"   
@@ -766,6 +772,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
