@@ -561,15 +561,17 @@ with st.container():
         st.write("")
     with col00:
         st.write("")
+
+
 # 参数设置部分
-# 如果是第一次运行，初始化默认值
-if "specificity_weight" not in st.session_state:
+if "specificity_weight" not in st.session_state and "sensitivity_weight" not in st.session_state:
     st.session_state.specificity_weight = 0.2
-if "sensitivity_weight" not in st.session_state:
-    st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
-# 当 specificity 改变时，自动更新 sensitivity
-def update_sensitivity():
-    st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
+    st.session_state.sensitivity_weight = 0.8  # 1 - 0.2
+def sync_weights(changed: str):
+    if changed == "specificity":
+        st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
+    elif changed == "sensitivity":
+        st.session_state.specificity_weight = 1 - st.session_state.sensitivity_weight
 
 with st.expander("Parameter Setting"):  
     with st.container():
@@ -614,7 +616,7 @@ with st.expander("Parameter Setting"):
                 background_color=rt_bg,
             )
         with col5:
-            ro_bg = "#F8FAFC"   
+            ro_bg = "#F0F5FF"   
             rt_offset = st_yled.number_input(
                 "Retention time offset:",
                 min_value=-10.0,
@@ -634,11 +636,12 @@ with st.expander("Parameter Setting"):
                 "Specificity weight:",
                 min_value=0.0,
                 max_value=1.0,
-                value=0.2,
+                value=st.session_state.specificity_weight,
                 step=0.05,
                 help="Specificity weight (0–1), default 0.2",
                 key="specificity_weight",
-                on_change=update_sensitivity,
+                on_change=sync_weights,
+                args=("specificity",),
                 background_color=spew_bg,
             )
         with col7:
@@ -647,9 +650,12 @@ with st.expander("Parameter Setting"):
                 "Sensitivity weight:",
                 min_value=0.0,
                 max_value=1.0,
+                value=st.session_state.sensitivity_weight,
                 step=0.05,
                 key="sensitivity_weight",
                 help="Automatically calculated as 1 - Specificity weight",
+                on_change=sync_weights,
+                args=("sensitivity",),
                 background_color=senw_bg,
             )
 
@@ -756,6 +762,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
