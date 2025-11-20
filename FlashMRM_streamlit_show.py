@@ -523,10 +523,12 @@ with st.expander("Select Input mode"):
     # 上传按钮
     col_u1, col_u2, col_u3 = st.columns([1, 1, 1])
     with col_u2:
-        upload_clicked = st.button(
+        up_bg = "#CCDAFF"
+        upload_clicked = st_yled.button(
             "Upload",
             use_container_width=True,
             key="upload_button",
+            background_color=up_bg,
             disabled=st.session_state.calculation_in_progress
         )
     if upload_clicked:
@@ -762,6 +764,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
