@@ -571,18 +571,19 @@ if "sensitivity_weight" not in st.session_state:
 def update_sensitivity():
     st.session_state.sensitivity_weight = 1 - st.session_state.specificity_weight
 
-with st.expander("Parameter Setting"):
-    
+with st.expander("Parameter Setting"):  
     with st.container():
         # 第一行参数：数据库选择 + M/z容差
         col1, col2 = st.columns([2, 2])
         with col1:
-            intf_data = st.selectbox(
+            se_bg = "#FFF3CD"
+            intf_data = st_yled.selectbox(
                 "Select INTF data:",
                 ["Default", "QE"],
                 index=0,
                 key="intf_data",
-                help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database"
+                help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database",
+                background_color=rt_bg,
             )
         with col2:
             mz_bg = "#fff9c4"
@@ -611,7 +612,6 @@ with st.expander("Parameter Setting"):
                 help="Retention time matching tolerance, default 2.0 minutes",
                 key="rt_tolerance",
                 background_color=rt_bg,
-                border_color="#F0AD4E",
             )
         with col5:
             ro_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
@@ -624,7 +624,6 @@ with st.expander("Parameter Setting"):
                 help="Retention time offset, default 0.0 minutes",
                 key="rt_offset",
                 background_color=ro_bg,
-                border_color="#F0AD4E",
             )
 
     # 第三行参数：特异性权重 + 
@@ -641,7 +640,6 @@ with st.expander("Parameter Setting"):
                 key="specificity_weight",
                 on_change=update_sensitivity,
                 background_color=spew_bg,
-                border_color="#F0AD4E",
             )
         with col7:
             senw_bg = "#f3e5f5"   
@@ -758,6 +756,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
