@@ -578,7 +578,7 @@ with st.expander("Parameter Setting"):
         # 第一行参数：数据库选择 + M/z容差
         col1, col2 = st.columns([2, 2])
         with col1:
-            se_bg = "#1C2F52"
+            se_bg = "#D9E4FF"
             intf_data = st_yled.selectbox(
                 "Select INTF data:",
                 ["Default", "QE"],
@@ -762,6 +762,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
