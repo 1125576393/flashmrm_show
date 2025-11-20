@@ -694,7 +694,7 @@ if st.session_state.calculation_complete:
     if not result_df.empty:
         CALCULATION_COLUMNS = [
             'chemical','Precursor_mz','InChIKey','RT',
-            'MSMS1','MSMS2','CE_QQQ1','CE_QQQ2','best5_combinations',
+            'MSMS1','MSMS2','CE_QQQ1','CE_QQQ2',
             'max_score','max_sensitivity_score','max_specificity_score',
         ]
         for col in CALCULATION_COLUMNS:
@@ -715,9 +715,9 @@ if st.session_state.calculation_complete:
     st.markdown('<div class="section-header">Best 5 ion-pair combinations</div>', unsafe_allow_html=True)
 
     IONPAIR_COLUMNS = [
-        'MSMS1','intensity1','CE1','MSMS2','intensity2','CE2',
+        'MSMS1','MSMS2',
         'sensitivity_score','specificity_score',
-        'hit_num','hit_rate','CE_QQQ1','CE_QQQ2'
+        'CE_QQQ1','CE_QQQ2'
     ]
 
     def _normalize_top5_rows(raw_list):
@@ -769,6 +769,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
