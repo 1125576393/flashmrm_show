@@ -576,7 +576,7 @@ with st.expander("Parameter Setting"):
         # 第一行参数：数据库选择 + M/z容差
         col1, col2 = st.columns([2, 2])
         with col1:
-            se_bg = "#FFF3CD"
+            se_bg = "#F5F7FA"
             intf_data = st_yled.selectbox(
                 "Select INTF data:",
                 ["Default", "QE"],
@@ -586,7 +586,7 @@ with st.expander("Parameter Setting"):
                 background_color=se_bg,
             )
         with col2:
-            mz_bg = "#fff9c4"
+            mz_bg = "#FFF7D6"
             mz_tolerance = st_yled.number_input(
                 "*m/z* tolerance:",
                 min_value=0.0,
@@ -602,7 +602,7 @@ with st.expander("Parameter Setting"):
     # 第二行参数：RT容差 + RT偏移
         col4, col5 = st.columns([1, 1])
         with col4:
-            rt_bg = "#FFF3CD"   
+            rt_bg = "#F0F5FF"   
             rt_tolerance = st_yled.number_input(
                 "Retention time tolerance:",
                 min_value=0.0,
@@ -614,7 +614,7 @@ with st.expander("Parameter Setting"):
                 background_color=rt_bg,
             )
         with col5:
-            ro_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+            ro_bg = "#F8FAFC"   
             rt_offset = st_yled.number_input(
                 "Retention time offset:",
                 min_value=-10.0,
@@ -629,7 +629,7 @@ with st.expander("Parameter Setting"):
     # 第三行参数：特异性权重 + 
         col6, col7 = st.columns([1, 1])
         with col6:
-            spew_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
+            spew_bg = "#EEF8F0"   
             specificity_weight = st_yled.number_input(
                 "Specificity weight:",
                 min_value=0.0,
@@ -642,7 +642,7 @@ with st.expander("Parameter Setting"):
                 background_color=spew_bg,
             )
         with col7:
-            senw_bg = "#f3e5f5"   
+            senw_bg = "#F8F0F8"   
             st_yled.number_input(
                 "Sensitivity weight:",
                 min_value=0.0,
@@ -756,6 +756,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
