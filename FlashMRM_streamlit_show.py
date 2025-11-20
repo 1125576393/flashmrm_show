@@ -587,7 +587,7 @@ with st.expander("Parameter Setting"):
         with col2:
             mz_bg = "#fff9c4"
             mz_tolerance = st_yled.number_input(
-                "M/z tolerance:",
+                "m/z tolerance:",
                 min_value=0.0,
                 max_value=10.0,
                 value=0.7,
@@ -603,7 +603,7 @@ with st.expander("Parameter Setting"):
         with col4:
             rt_bg = "#FFF3CD"   
             rt_tolerance = st_yled.number_input(
-                "RT tolerance:",
+                "Retention time tolerance:",
                 min_value=0.0,
                 max_value=10.0,
                 value=2.0,
@@ -616,7 +616,7 @@ with st.expander("Parameter Setting"):
         with col5:
             ro_bg = "#FFF3CD"   # 比如淡黄色，你可以换成任何颜色
             rt_offset = st_yled.number_input(
-                "RT offset:",
+                "Retention time offset:",
                 min_value=-10.0,
                 max_value=10.0,
                 value=0.0,
@@ -758,8 +758,8 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
-else:
-    st.warning("No results generated. Please check your input data or parameter configuration！")
+
+
 
 
 
