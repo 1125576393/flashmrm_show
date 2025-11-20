@@ -709,7 +709,11 @@ if st.session_state.calculation_complete:
             if col not in EXCLUDE_FORMAT:
                 if hasattr(display_df[col], "dtype") and display_df[col].dtype.kind in "fc":
                     display_df[col] = display_df[col].round(1)
-        
+
+        display_df = display_df.rename(columns={
+            "MSMS1": "MSM1",
+            "MSMS2": "MSM2"
+        })
         st.dataframe(display_df, use_container_width=False)
 
         csv_data = result_df[CALCULATION_COLUMNS].to_csv(index=False, encoding='utf-8').encode('utf-8')
@@ -770,6 +774,10 @@ if st.session_state.calculation_complete:
         if col not in EXCLUDE_TOP5:
             if hasattr(display_top5_df[col], "dtype") and display_top5_df[col].dtype.kind in "fc":
                 display_top5_df[col] = display_top5_df[col].round(1)
+    display_top5_df = display_top5_df.rename(columns={
+        "MSMS1": "MSM1",
+        "MSMS2": "MSM2"
+    })
     st.dataframe(display_top5_df, use_container_width=True, hide_index=True)
 
     st.download_button(
@@ -787,6 +795,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
