@@ -37,6 +37,9 @@ st.markdown("""
         margin-top: 30px;
         margin-bottom: 15px;
     }
+    label[for="rt_tolerance"] {
+        white-space: nowrap;
+    }
     .input-container {
         display: flex;
         align-items: center;
@@ -764,6 +767,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
