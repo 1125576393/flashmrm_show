@@ -37,9 +37,6 @@ st.markdown("""
         margin-top: 30px;
         margin-bottom: 15px;
     }
-    label[for="rt_tolerance"] {
-        white-space: nowrap;
-    }
     .input-container {
         display: flex;
         align-items: center;
@@ -609,9 +606,10 @@ with st.expander("Parameter Setting"):
     # 第二行参数：RT容差 + RT偏移
         col4, col5 = st.columns([1, 1])
         with col4:
+            st.write("Retention time tolerance:")
             rt_bg = "#F0F5FF"   
             rt_tolerance = st_yled.number_input(
-                "Retention time tolerance:",
+                "",
                 min_value=0.0,
                 max_value=10.0,
                 value=2.0,
@@ -619,6 +617,7 @@ with st.expander("Parameter Setting"):
                 help="Retention time matching tolerance, default 2.0 minutes",
                 key="rt_tolerance",
                 background_color=rt_bg,
+                label_visibility="collapsed"
             )
         with col5:
             ro_bg = "#F0F5FF"   
@@ -767,6 +766,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
