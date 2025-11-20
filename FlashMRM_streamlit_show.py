@@ -700,7 +700,17 @@ if st.session_state.calculation_complete:
         for col in CALCULATION_COLUMNS:
             if col not in result_df.columns:
                 result_df[col] = None
-        st.dataframe(result_df[CALCULATION_COLUMNS], use_container_width=False)
+
+         # ⭐（显示用）格式化副本 —— 保留 1 位小数
+        display_df = result_df[CALCULATION_COLUMNS].copy()
+        EXCLUDE_FORMAT = ['max_score']
+
+        for col in CALCULATION_COLUMNS:
+            if col not in EXCLUDE_FORMAT:
+                if hasattr(display_df[col], "dtype") and display_df[col].dtype.kind in "fc":
+                    display_df[col] = display_df[col].round(1)
+        
+        st.dataframe(display_df, use_container_width=False)
 
         csv_data = result_df[CALCULATION_COLUMNS].to_csv(index=False, encoding='utf-8').encode('utf-8')
         st.download_button(
@@ -751,8 +761,17 @@ if st.session_state.calculation_complete:
     )
     sel_row = result_df[result_df['_display_key'] == selected_key].iloc[0]
     top5_df = _normalize_top5_rows(sel_row.get('best5_combinations'))
-    
-    st.dataframe(top5_df, use_container_width=True, hide_index=True)
+
+    # ⭐ 展示用：格式化副本（仅显示 1 位小数）
+    display_top5_df = top5_df.copy()
+    EXCLUDE_TOP5 = ['sensitivity_score']
+    EXCLUDE_TOP5 = ['specificity_score']
+
+    for col in IONPAIR_COLUMNS:
+        if col not in EXCLUDE_TOP5:
+            if display_top5[col].dtype.kind in "fc":
+                display_top5[col] = display_top5[col].round(1)
+    st.dataframe(display_top5_df, use_container_width=True, hide_index=True)
 
     st.download_button(
         label="📥 Download Top-5 ion pairs (CSV)",
@@ -769,6 +788,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
