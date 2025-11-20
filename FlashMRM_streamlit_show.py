@@ -764,13 +764,12 @@ if st.session_state.calculation_complete:
 
     # ⭐ 展示用：格式化副本（仅显示 1 位小数）
     display_top5_df = top5_df.copy()
-    EXCLUDE_TOP5 = ['sensitivity_score']
-    EXCLUDE_TOP5 = ['specificity_score']
+    EXCLUDE_TOP5 = ['sensitivity_score','specificity_score']
 
     for col in IONPAIR_COLUMNS:
         if col not in EXCLUDE_TOP5:
-            if display_top5[col].dtype.kind in "fc":
-                display_top5[col] = display_top5[col].round(1)
+            if hasattr(display_top5_df[col], "dtype") and display_top5_df[col].dtype.kind in "fc":
+                display_top5_df[col] = display_top5_df[col].round(1)
     st.dataframe(display_top5_df, use_container_width=True, hide_index=True)
 
     st.download_button(
@@ -788,6 +787,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
