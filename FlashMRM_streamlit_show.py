@@ -587,7 +587,7 @@ with st.expander("Parameter Setting"):
         with col2:
             mz_bg = "#fff9c4"
             mz_tolerance = st_yled.number_input(
-                "m/z tolerance:",
+                "*m/z* tolerance:",
                 min_value=0.0,
                 max_value=10.0,
                 value=0.7,
@@ -758,6 +758,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
