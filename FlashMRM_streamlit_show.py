@@ -46,7 +46,7 @@ st.markdown("""
         font-family: Arial, sans-serif !important;
         width: 150px;
         font-weight: bold;
-        font-size: 36px !important;
+        font-size: 64px !important;
     }
     .result-container {
         margin-top: 30px;
@@ -758,6 +758,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
