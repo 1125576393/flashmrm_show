@@ -387,7 +387,7 @@ def run_flashmrm_calculation():
         st.session_state.result_df = pd.DataFrame(fallback_results)
 
 # 主标题和Help按钮
-col_title, col_help = st.columns([2, 1])
+col_title, col_help = st.columns([3, 1])
 with col_title:
    st.image("786a50646609813e89cc2017082525a3.png", width=200)
 with col_help:
@@ -758,6 +758,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
