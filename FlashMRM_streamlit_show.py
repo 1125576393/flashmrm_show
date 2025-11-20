@@ -691,12 +691,18 @@ if calculate_clicked:
 if st.session_state.calculation_complete:
     st.markdown('<div class="section-header">Calculation results</div>', unsafe_allow_html=True)
     result_df = st.session_state.result_df
-    
     if not result_df.empty:
-        display_columns = [col for col in result_df.columns if col != 'best5_combinations']
-        st.dataframe(result_df[display_columns], use_container_width=False) 
-        
-        csv_data = result_df.to_csv(index=False, encoding='utf-8').encode('utf-8')
+        CALCULATION_COLUMNS = [
+            'chemical','Precursor_mz','InChIKey','RT',
+            'MSMS1','MSMS2','CE_QQQ1','CE_QQQ2','best5_combinations',
+            'max_score','max_sensitivity_score','max_specificity_score',
+        ]
+        for col in CALCULATION_COLUMNS:
+            if col not in result_df.columns:
+                result_df[col] = None
+        st.dataframe(result_df[CALCULATION_COLUMNS], use_container_width=False)
+
+        csv_data = result_df[CALCULATION_COLUMNS].to_csv(index=False, encoding='utf-8').encode('utf-8')
         st.download_button(
             label="📥 Download results CSV",
             data=csv_data,
@@ -763,6 +769,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
