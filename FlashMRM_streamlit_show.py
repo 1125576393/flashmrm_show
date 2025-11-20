@@ -583,7 +583,7 @@ with st.expander("Parameter Setting"):
                 index=0,
                 key="intf_data",
                 help="Default: Using NIST Format Interference Database；QE: Using QE format to interference with the database",
-                background_color=rt_bg,
+                background_color=se_bg,
             )
         with col2:
             mz_bg = "#fff9c4"
@@ -756,6 +756,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
