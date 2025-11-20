@@ -87,24 +87,7 @@ st.markdown("""
     .progress-container {
         flex-grow: 1;
     }
-    /* 所有小部件的 label 容器：改成单行 flex 布局 */
-    div[data-testid="stWidgetLabel"] {
-        display: flex;
-        align-items: center;
-        flex-wrap: nowrap;        /* 禁止换行 */
-    }
 
-    /* label 文本本身不允许换行 */
-    div[data-testid="stWidgetLabel"] > label {
-        white-space: nowrap;
-    }
-
-    /* help 问号图标：固定跟在后面，不挤文字 */
-    div[data-testid="stWidgetLabel"] [data-testid="stTooltipIcon"] {
-        margin-left: 6px;         /* 和文字留点间距 */
-        flex-shrink: 0;           /* 不被压缩 */
-    }
-    
     /* 新增：为主要区块添加额外间距 */
     .stRadio {
         margin-bottom: 40px !important;  /* 输入模式选择区块 */
@@ -789,6 +772,7 @@ if st.session_state.calculation_complete:
     success_count = success_conditions.sum()  # 用sum()统计True的数量，避免len()的歧义
         
     st.success(f"Calculation complete ✅ | Successfully processed: {success_count}| Overall processing: {len(result_df)}")
+
 
 
 
